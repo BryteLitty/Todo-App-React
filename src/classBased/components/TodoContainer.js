@@ -8,23 +8,7 @@ import InputTodo from "./InputTodo";
 class TodoContainer extends React.Component {
 
     state = { 
-        todos: [
-            {
-                id: uuid4(),
-                title: "Setup development environment",
-                completed: true
-            },
-            {
-                id: uuid4(),
-                title: "Develop website and add content",
-                completed: false
-            },
-            {
-                id: uuid4(),
-                title: "Deploy to live server",
-                completed: false
-            }
-        ]
+        todos: [],
     }
 
     // function to hande toggle complete
@@ -66,16 +50,49 @@ class TodoContainer extends React.Component {
         })
     }
 
+    setUpdate = (updatedTitle, id) => {
+        this.setState({
+            todos: this.state.todos.map(todo => {
+                if(todo.id === id) {
+                    todo.title = updatedTitle
+                }
+                return todo
+            })
+        })
+    }
+
+
+    componentDidUpdate(prevProps, PrevState) {
+        if(PrevState.todos !== this.state.todos) {
+            const temp = JSON.stringify(this.state.todos);
+            localStorage.setItem("todos", temp)
+        }
+    }
+
+
+    componentDidMount() {
+        const temp = localStorage.getItem('todos')
+        const loadTodos = JSON.parse(temp)
+        if(loadTodos) {
+            this.setState({
+                todos: loadTodos
+            })
+        }
+    }
+
     render() {
         return (
-            <div>
-                <Header />
-                <InputTodo addTodoProps={this.addTodoItem}/>
-                <TodoList 
-                    todos={this.state.todos} 
-                    handleChangeProps={this.handleChange}
-                    deleteTodoProps={this.deleteTodo}
-                />
+            <div className="container">
+                <div className="inner">
+                    <Header />
+                    <InputTodo addTodoProps={this.addTodoItem}/>
+                    <TodoList 
+                        todos={this.state.todos} 
+                        handleChangeProps={this.handleChange}
+                        deleteTodoProps={this.deleteTodo}
+                        setUpdate={this.setUpdate}
+                    />
+                </div>
             </div>
         )
     }
