@@ -1,61 +1,60 @@
-import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-import { MdClose } from "react-icons/md"
-import { FiMenu } from "react-icons/fi"
+import { MdClose } from 'react-icons/md';
+import { FiMenu } from 'react-icons/fi';
 
 const Navbar = () => {
-    const [navbarOpen, setNavbarOpen] = useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false);
 
-    const links = [
-        {
-            id: 1,
-            path: '/',
-            text: 'Home'
-        },
-        {
-            id: 2,
-            path: '/about',
-            text: 'About'
-        }
-    ]
+  const links = [
+    {
+      id: 1,
+      path: '/',
+      text: 'Home',
+    },
+    {
+      id: 2,
+      path: '/about',
+      text: 'About',
+    },
+  ];
 
-    const handleToggle = () => {
-        setNavbarOpen(prev => !prev)
-    }
+  const handleToggle = () => {
+    setNavbarOpen((prev) => !prev);
+  };
 
-    const closeMenu = () => {
-        setNavbarOpen(false)
-    }
+  const closeMenu = () => {
+    setNavbarOpen(false);
+  };
 
-    return (
-        <nav className="navBar">
+  return (
+    <nav className="navBar">
 
-            <button onClick={handleToggle}>
-                {navbarOpen ? (
-                    <MdClose style={{ color: "#fff", width: "40px", height: "40px" }} />
-                ) : (
-                    <FiMenu style={{ color: "#7b7b7b", width: "40px", height: "40px" }} />
-                )}
-            </button>
+      <button onClick={handleToggle}>
+        {navbarOpen ? (
+          <MdClose style={{ color: '#fff', width: '40px', height: '40px' }} />
+        ) : (
+          <FiMenu style={{ color: '#7b7b7b', width: '40px', height: '40px' }} />
+        )}
+      </button>
 
-            <ul className={`menuNav ${navbarOpen ? "showMenu" : " "}`}>
-                {links.map(link => {
-                    return (
-                        <NavLink 
-                            key={link.id} 
-                            to={link.path}a
-                            ctiveclassname="active-link " 
-                            onClick={() => closeMenu()}
-                            exact
-                        >
-                            {link.text}
-                        </NavLink>
-                    )
-                })}
-            </ul>
-        </nav>
-    )
-}
+      <ul className={`menuNav ${navbarOpen ? 'showMenu' : ' '}`}>
+        {links.map((link) => (
+          <NavLink
+            key={link.id}
+            to={link.path}
+            a
+            ctiveclassname="active-link "
+            onClick={() => closeMenu()}
+            exact
+          >
+            {link.text}
+          </NavLink>
+        ))}
+      </ul>
+    </nav>
+  );
+};
 
 export default Navbar;
